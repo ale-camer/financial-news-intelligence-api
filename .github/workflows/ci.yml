@@ -1,0 +1,30 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# CI/CD Pipeline — Financial News Intelligence API (P-04)
+#
+# STATUS: Placeholder — to be implemented in Issue #24 (M5)
+#
+# Planned stages:
+#   1. Lint        → Ruff + MyPy
+#   2. Test        → pytest (80%+ coverage enforcement)
+#   3. Build       → Docker image build
+#   4. Deploy      → GCP Cloud Run (staging on PR merge to develop,
+#                                   production on merge to main)
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: CI/CD Pipeline
+
+on:
+  # Trigger configuration to be completed in Issue #24
+  push:
+    branches: []        # placeholder
+  pull_request:
+    branches: []        # placeholder
+
+jobs:
+  # ── Placeholder ─────────────────────────────────────────────────────────────
+  placeholder:
+    name: "⚠️ Pipeline not yet configured — see Issue #24"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remind developers
+        run: echo "CI/CD pipeline configuration is tracked in Issue 24 (M5 - Cloud Deploy)"

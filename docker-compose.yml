@@ -1,0 +1,66 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# P-04: Financial News Intelligence API — Docker Compose Skeleton
+#
+# Services declared (configuration to be completed per milestone):
+#   - api          → FastAPI application (M3)
+#   - mongodb      → Article document store (M4)
+#   - redis        → Results cache (M4)
+#   - zookeeper    → Kafka coordination (M4)
+#   - kafka        → Event streaming broker (M4)
+#
+# NOTE: This is a Day 0 skeleton. Image tags, volumes, healthchecks,
+#       and environment bindings will be added in their respective issues.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── FastAPI application ────────────────────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    container_name: financial-news-api
+    # ports, env_file, depends_on → to be configured in Issue #12 (M3)
+    profiles:
+      - api
+
+  # ── MongoDB ────────────────────────────────────────────────────────────────
+  mongodb:
+    image: mongo:7.0
+    container_name: financial-news-mongodb
+    # volumes, environment, ports → to be configured in Issue #15 (M4)
+    profiles:
+      - storage
+
+  # ── Redis ─────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7.2-alpine
+    container_name: financial-news-redis
+    # ports, command, volumes → to be configured in Issue #16 (M4)
+    profiles:
+      - storage
+
+  # ── Zookeeper (Kafka dependency) ───────────────────────────────────────────
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: financial-news-zookeeper
+    # environment → to be configured in Issue #17 (M4)
+    profiles:
+      - messaging
+
+  # ── Apache Kafka ───────────────────────────────────────────────────────────
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: financial-news-kafka
+    depends_on:
+      - zookeeper
+    # environment, ports, volumes → to be configured in Issue #17 (M4)
+    profiles:
+      - messaging
+
+networks:
+  default:
+    name: financial-news-network
+    driver: bridge

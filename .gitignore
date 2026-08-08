@@ -1,0 +1,70 @@
+# ── Python ──────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ── Virtual environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+
+# ── Testing & coverage ───────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+coverage.xml
+*.coveragerc
+
+# ── Linting & type-checking ──────────────────────────────────────────────────
+.mypy_cache/
+.ruff_cache/
+
+# ── Secrets & environment ────────────────────────────────────────────────────
+.env
+.env.local
+*.secret
+
+# ── IDE & editors ────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+
+# ── Docker ───────────────────────────────────────────────────────────────────
+*.log
+
+# ── Terraform ────────────────────────────────────────────────────────────────
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.backup
+infra/terraform/*.tfvars
+infra/terraform/.terraform.lock.hcl
+
+# ── GCP credentials ──────────────────────────────────────────────────────────
+credentials/
+*.json
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+notebooks/
+
+# ── Distribution ─────────────────────────────────────────────────────────────
+*.tar.gz
+*.whl
