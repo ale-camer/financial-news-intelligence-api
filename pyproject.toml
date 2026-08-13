@@ -31,7 +31,9 @@ dependencies = [
     "beautifulsoup4>=4.12.0",
     "pydantic>=2.0.0",
     "sqlalchemy>=2.0.0",
-    "psycopg2-binary>=2.9.0"
+    "psycopg2-binary>=2.9.0",
+    "transformers>=4.30.0",
+    "torch>=2.0.0"
 ]
 
 [project.optional-dependencies]
@@ -63,7 +65,7 @@ omit = ["tests/*", "**/__init__.py"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = [
@@ -82,7 +84,7 @@ ignore = ["E501"]
 known-first-party = ["src"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 ignore_missing_imports = true
 exclude = [".venv", "infra"]
