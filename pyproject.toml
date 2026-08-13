@@ -26,7 +26,8 @@ classifiers = [
 # ── Runtime dependencies (to be populated per milestone) ─────────────────────
 dependencies = [
     "feedparser>=6.0",
-    "requests>=2.31.0"
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.1"
 ]
 
 [project.optional-dependencies]
