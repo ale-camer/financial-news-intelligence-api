@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
     API_V1_STR: str = "/api/v1"
     DATABASE_URL: str = "sqlite:///local.db"
+    NEWSAPI_KEY: str = "test_key"
 
     model_config = SettingsConfigDict(
         env_file=".env",

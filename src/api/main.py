@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import FastAPI
 
 from src.api.config import settings
-from src.api.routes import articles
+from src.api.routes import articles, ingestion
 
 
 def create_app() -> FastAPI:
@@ -26,6 +26,12 @@ def create_app() -> FastAPI:
         articles.router,
         prefix=settings.API_V1_STR + "/articles",
         tags=["articles"],
+    )
+
+    app.include_router(
+        ingestion.router,
+        prefix=settings.API_V1_STR + "/ingest",
+        tags=["ingestion"],
     )
 
     return app
