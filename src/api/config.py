@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     REDIS_CACHE_TTL: int = 3600
     KAFKA_BOOTSTRAP_SERVERS: str = "localhost:9092"
     KAFKA_TOPIC_NEWS_PROCESSED: str = "news.processed"
+    KAFKA_GROUP_ID: str = "financial-news-group"
+    KAFKA_TOPIC_MARKET_EVENTS_RAW: str = "market.events.raw"
 
     model_config = SettingsConfigDict(
         env_file=".env",
