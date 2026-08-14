@@ -10,7 +10,7 @@ from src.storage.models import Article
 router = APIRouter()
 
 
-@router.get("/", response_model=list[ArticleResponse])
+@router.get("", response_model=list[ArticleResponse])
 def get_articles(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
