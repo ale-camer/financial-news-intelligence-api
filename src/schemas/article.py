@@ -24,7 +24,18 @@ class ProcessedArticle(RawArticle):
 
     sentiment_score: float
     sentiment_label: str
-    # Entities could be a list of strings or list of dicts.
-    # We use List[Dict[str, Any]] as a flexible structure for NER outputs like:
-    # [{"text": "Apple", "label": "ORG"}, {"text": "Tim Cook", "label": "PERSON"}]
     entities: list[dict[str, Any]]
+
+
+class ArticleResponse(RawArticle):
+    """
+    Schema for article API responses including database ID and optional NLP fields.
+    """
+
+    id: int
+    sentiment_score: float | None = None
+    sentiment_label: str | None = None
+    entities: list[dict[str, Any]] | None = None
+
+    model_config = {"from_attributes": True}
+

@@ -3,6 +3,7 @@ from typing import Any
 from fastapi import FastAPI
 
 from src.api.config import settings
+from src.api.routes import articles
 
 
 def create_app() -> FastAPI:
@@ -20,6 +21,12 @@ def create_app() -> FastAPI:
             "status": "ok",
             "app": settings.PROJECT_NAME,
         }
+
+    app.include_router(
+        articles.router,
+        prefix=settings.API_V1_STR + "/articles",
+        tags=["articles"],
+    )
 
     return app
 
