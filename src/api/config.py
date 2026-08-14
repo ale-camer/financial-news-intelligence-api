@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     MONGODB_DB_NAME: str = "financial_news"
     REDIS_URL: str = "redis://localhost:6379/0"
     REDIS_CACHE_TTL: int = 3600
+    KAFKA_BOOTSTRAP_SERVERS: str = "localhost:9092"
+    KAFKA_TOPIC_NEWS_PROCESSED: str = "news.processed"
 
     model_config = SettingsConfigDict(
         env_file=".env",
