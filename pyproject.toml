@@ -33,7 +33,8 @@ dependencies = [
     "sqlalchemy>=2.0.0",
     "psycopg2-binary>=2.9.0",
     "transformers>=4.30.0",
-    "torch>=2.0.0"
+    "torch>=2.0.0",
+    "spacy>=3.7.0"
 ]
 
 [project.optional-dependencies]
