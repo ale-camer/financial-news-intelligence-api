@@ -94,6 +94,18 @@ git branch -d feature/issue-10-preprocessing
 git push origin develop
 ```
 
+### Step 7: Create PR to Main
+
+Since this issue concludes a logical set of features for the NLP pipeline, create a Pull Request to merge `develop` into `main`.
+
+**Commands:**
+```bash
+git checkout main
+git merge develop
+git push origin main
+git checkout develop
+```
+
 ---
 
 ## Acceptance Criteria
@@ -104,3 +116,4 @@ git push origin develop
 - [ ] Unit tests cover both functions thoroughly, including edge cases.
 - [ ] Zero Ruff or MyPy errors.
 - [ ] Branch is successfully merged into `develop`.
+- [ ] `develop` is successfully merged into `main`.
