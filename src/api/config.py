@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     DATABASE_URL: str = "sqlite:///local.db"
     NEWSAPI_KEY: str = "test_key"
+    MONGODB_URL: str = "mongodb://localhost:27017"
+    MONGODB_DB_NAME: str = "financial_news"
 
     model_config = SettingsConfigDict(
         env_file=".env",
