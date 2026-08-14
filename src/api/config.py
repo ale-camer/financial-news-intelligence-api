@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     NEWSAPI_KEY: str = "test_key"
     MONGODB_URL: str = "mongodb://localhost:27017"
     MONGODB_DB_NAME: str = "financial_news"
+    REDIS_URL: str = "redis://localhost:6379/0"
+    REDIS_CACHE_TTL: int = 3600
 
     model_config = SettingsConfigDict(
         env_file=".env",
