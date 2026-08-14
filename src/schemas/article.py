@@ -39,3 +39,15 @@ class ArticleResponse(RawArticle):
 
     model_config = {"from_attributes": True}
 
+
+class ArticleSentimentResponse(BaseModel):
+    """
+    Schema for detailed sentiment and NLP response of a specific article.
+    """
+
+    id: int
+    sentiment_score: float | None = None
+    sentiment_label: str | None = None
+    entities: list[dict[str, Any]] | None = None
+
+    model_config = {"from_attributes": True}

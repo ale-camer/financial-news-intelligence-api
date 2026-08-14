@@ -1,9 +1,9 @@
 from typing import Any
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, HTTPException, Path, Query
 from sqlalchemy.orm import Session
 
-from src.schemas.article import ArticleResponse
+from src.schemas.article import ArticleResponse, ArticleSentimentResponse
 from src.storage.db import get_session
 from src.storage.models import Article
 
@@ -30,3 +30,17 @@ def get_articles(
 
     articles = query.offset(skip).limit(limit).all()
     return articles
+
+
+@router.get("/{article_id}/sentiment", response_model=ArticleSentimentResponse)
+def get_article_sentiment(
+    article_id: int = Path(..., title="The ID of the article", ge=1),
+    session: Session = Depends(get_session),
+) -> Any:
+    """
+    Retrieve detailed sentiment and NER insights for a single article.
+    """
+    article = session.query(Article).filter(Article.id == article_id).first()
+    if not article:
+        raise HTTPException(status_code=404, detail="Article not found")
+    return article
