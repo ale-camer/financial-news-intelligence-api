@@ -1,64 +1,83 @@
 version: "3.9"
 
-# ─────────────────────────────────────────────────────────────────────────────
-# P-04: Financial News Intelligence API — Docker Compose Skeleton
-#
-# Services declared (configuration to be completed per milestone):
-#   - api          → FastAPI application (M3)
-#   - mongodb      → Article document store (M4)
-#   - redis        → Results cache (M4)
-#   - zookeeper    → Kafka coordination (M4)
-#   - kafka        → Event streaming broker (M4)
-#
-# NOTE: This is a Day 0 skeleton. Image tags, volumes, healthchecks,
-#       and environment bindings will be added in their respective issues.
-# ─────────────────────────────────────────────────────────────────────────────
-
 services:
 
-  # ── FastAPI application ────────────────────────────────────────────────────
   api:
     build:
       context: .
       dockerfile: infra/docker/Dockerfile
     container_name: financial-news-api
-    # ports, env_file, depends_on → to be configured in Issue #12 (M3)
-    profiles:
-      - api
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - MONGODB_DB_NAME=financial_news
+      - REDIS_URL=redis://redis:6379/0
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
-  # ── MongoDB ────────────────────────────────────────────────────────────────
   mongodb:
     image: mongo:7.0
     container_name: financial-news-mongodb
-    # volumes, environment, ports → to be configured in Issue #15 (M4)
-    profiles:
-      - storage
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=financial_news
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # ── Redis ─────────────────────────────────────────────────────────────────
   redis:
     image: redis:7.2-alpine
     container_name: financial-news-redis
-    # ports, command, volumes → to be configured in Issue #16 (M4)
-    profiles:
-      - storage
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # ── Zookeeper (Kafka dependency) ───────────────────────────────────────────
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
     container_name: financial-news-zookeeper
-    # environment → to be configured in Issue #17 (M4)
-    profiles:
-      - messaging
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
 
-  # ── Apache Kafka ───────────────────────────────────────────────────────────
   kafka:
     image: confluentinc/cp-kafka:7.6.0
     container_name: financial-news-kafka
+    ports:
+      - "9092:9092"
     depends_on:
       - zookeeper
-    # environment, ports, volumes → to be configured in Issue #17 (M4)
-    profiles:
-      - messaging
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+volumes:
+  mongodb_data:
+  redis_data:
 
 networks:
   default:
